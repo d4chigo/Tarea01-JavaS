@@ -1,4 +1,97 @@
 package org.example;
 
+import java.util.Scanner;
+
 public class Caso05 {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        char plan, atencion;
+        double monto, deducible;
+        double cobertura, tope;
+        double aseguradora, paciente;
+
+        System.out.print("Ingrese plan (B/P/F): ");
+        plan = sc.next().charAt(0);
+
+        System.out.print("Ingrese atencion (C/E/H): ");
+        atencion = sc.next().charAt(0);
+
+        System.out.print("Ingrese monto: ");
+        monto = sc.nextDouble();
+
+        if (plan != 'B' && plan != 'P' && plan != 'F') {
+
+            System.out.println("Plan no valido");
+
+        } else if (atencion != 'C' && atencion != 'E' && atencion != 'H') {
+
+            System.out.println("Tipo de atencion no valido");
+
+        } else {
+
+            if (atencion == 'C') {
+                deducible = 0;
+            } else if (atencion == 'E') {
+                deducible = 50;
+            } else {
+                deducible = 200;
+            }
+
+            if (plan == 'B') {
+
+                tope = 5000;
+
+                if (atencion == 'C') {
+                    cobertura = 0.60;
+                } else if (atencion == 'E') {
+                    cobertura = 0.70;
+                } else {
+                    cobertura = 0.50;
+                }
+
+            } else if (plan == 'P') {
+
+                tope = 15000;
+
+                if (atencion == 'C') {
+                    cobertura = 0.80;
+                } else if (atencion == 'E') {
+                    cobertura = 0.90;
+                } else {
+                    cobertura = 0.70;
+                }
+
+            } else {
+
+                tope = 50000;
+
+                if (atencion == 'C' || atencion == 'E') {
+                    cobertura = 1.0;
+                } else {
+                    cobertura = 0.90;
+                }
+            }
+
+            if (monto <= deducible) {
+                aseguradora = 0;
+            } else {
+
+                aseguradora = (monto - deducible) * cobertura;
+
+                if (aseguradora > tope) {
+                    aseguradora = tope;
+                }
+            }
+
+            paciente = monto - aseguradora;
+
+            System.out.printf("Paga la aseguradora: S/ %.2f%n", aseguradora);
+            System.out.printf("Paga el paciente: S/ %.2f%n", paciente);
+        }
+
+        sc.close();
+    }
 }
